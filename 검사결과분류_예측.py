@@ -49,6 +49,9 @@ def result_site_r(input_txt):
         for m in re.finditer(site_r02,input_txt):
             site_loc_list.append(m.start())
         return max(site_loc_list), "우안"
+    else:    # 설정해 주지 않았더니 '>' not supported between instances of 'tuple' and 'int' 에러가 발생함.
+    # 에러의 원인은 type이 달라서 max 값 비교가 불가능하다
+        return (0,'')
         
 def result_site_l(input_txt):
     site_loc_list = []
@@ -60,6 +63,9 @@ def result_site_l(input_txt):
         for m in re.finditer(site_l02,input_txt):
             site_loc_list.append(m.start())
         return max(site_loc_list), "좌안"
+    else:    # 설정해 주지 않았더니 '>' not supported between instances of 'tuple' and 'int' 에러가 발생함.
+    # 에러의 원인은 type이 달라서 max 값 비교가 불가능하다
+        return (0,'')
 
 def result_site_o(input_txt):
     site_loc_list = []
@@ -71,15 +77,15 @@ def result_site_o(input_txt):
         for m in re.finditer(site_o02,input_txt):
             site_loc_list.append(m.start())
         return max(site_loc_list), "양안"
+    else:    # 설정해 주지 않았더니 '>' not supported between instances of 'tuple' and 'int' 에러가 발생함.
+    # 에러의 원인은 type이 달라서 max 값 비교가 불가능하다
+        return (0,'')
 
 # 찾은 위치 중 해당 결과와 가장 가까운 위치를 최종 위치로 찾기
 def find_site(input_txt):
-    # max 값을 찾아야 하므로 비교를 위해서는 해당 site가 없을 경우도 정의가 필요함.
-    # 설정해 주지 않았더니 '>' not supported between instances of 'tuple' and 'int' 에러가 발생함.
-    # 에러의 원인은 type이 달라서 max 값 비교가 불가능하다
-    right_site = (0,'') if result_site_r(input_txt)==None else result_site_r(input_txt)
-    left_site  = (0,'') if result_site_l(input_txt)==None else result_site_l(input_txt)
-    both_site  = (0,'') if result_site_o(input_txt)==None else result_site_o(input_txt)
+    right_site = result_site_r(input_txt)
+    left_site  = result_site_l(input_txt)
+    both_site  = result_site_o(input_txt)
     # 추가적으로 결과에 안구 위치가 명시되어 있지 않으면 양안으로 간주해야 함.
     if right_site == (0,'') and left_site == (0,'') and  both_site == (0,''):
         site = (0,'양안')
